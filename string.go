@@ -51,7 +51,7 @@ func (s *String) UnmarshalJSON(data []byte) error {
 	}
 	switch x := v.(type) {
 	case string:
-		s.String = x
+		s.NullString.String = x
 	case map[string]interface{}:
 		err = json.Unmarshal(data, &s.NullString)
 	case nil:
@@ -70,7 +70,7 @@ func (s String) MarshalJSON() ([]byte, error) {
 	if !s.Valid {
 		return []byte("null"), nil
 	}
-	return json.Marshal(s.String)
+	return json.Marshal(s.NullString.String)
 }
 
 // MarshalText implements encoding.TextMarshaler.
@@ -79,20 +79,20 @@ func (s String) MarshalText() ([]byte, error) {
 	if !s.Valid {
 		return []byte{}, nil
 	}
-	return []byte(s.String), nil
+	return []byte(s.NullString.String), nil
 }
 
 // UnmarshalText implements encoding.TextUnmarshaler.
 // It will unmarshal to a null String if the input is a blank string.
 func (s *String) UnmarshalText(text []byte) error {
-	s.String = string(text)
-	s.Valid = s.String != ""
+	s.NullString.String = string(text)
+	s.Valid = s.NullString.String != ""
 	return nil
 }
 
 // SetValid changes this String's value and also sets it to be non-null.
 func (s *String) SetValid(v string) {
-	s.String = v
+	s.NullString.String = v
 	s.Valid = true
 }
 
@@ -101,7 +101,7 @@ func (s String) Ptr() *string {
 	if !s.Valid {
 		return nil
 	}
-	return &s.String
+	return &s.NullString.String
 }
 
 // IsZero returns true for null strings, for potential future omitempty support.
@@ -109,7 +109,6 @@ func (s String) IsZero() bool {
 	return !s.Valid
 }
 
-// Str should be String for stringer interface, but has naming conflict.
-func (s String) Str() string {
-	return s.String
+func (s String) String() string {
+	return s.NullString.String
 }
