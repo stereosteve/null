@@ -127,3 +127,10 @@ func (b Bool) Ptr() *bool {
 func (b Bool) IsZero() bool {
 	return !b.Valid
 }
+
+func (b Bool) String() string {
+	if b.Valid {
+		return fmt.Sprintf("%v", b.Bool)
+	}
+	return ""
+}

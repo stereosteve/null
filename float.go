@@ -115,3 +115,10 @@ func (f Float) Ptr() *float64 {
 func (f Float) IsZero() bool {
 	return !f.Valid
 }
+
+func (f Float) String() string {
+	if f.Valid {
+		return fmt.Sprintf("%v", f.Float64)
+	}
+	return ""
+}

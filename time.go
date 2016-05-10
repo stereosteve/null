@@ -133,3 +133,10 @@ func (t Time) Ptr() *time.Time {
 	}
 	return &t.Time
 }
+
+func (t Time) String() string {
+	if t.Valid {
+		return fmt.Sprintf("%v", t.Time)
+	}
+	return ""
+}

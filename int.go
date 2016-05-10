@@ -116,3 +116,10 @@ func (i Int) Ptr() *int64 {
 func (i Int) IsZero() bool {
 	return !i.Valid
 }
+
+func (i Int) String() string {
+	if i.Valid {
+		return fmt.Sprintf("%v", i.Int64)
+	}
+	return ""
+}

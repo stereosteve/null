@@ -108,3 +108,8 @@ func (s String) Ptr() *string {
 func (s String) IsZero() bool {
 	return !s.Valid
 }
+
+// Str should be String for stringer interface, but has naming conflict.
+func (s String) Str() string {
+	return s.String
+}
